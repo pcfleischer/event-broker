@@ -1,0 +1,19 @@
+server.port: 9080
+
+spring.cloud.stream:
+# local
+#  function.definition: eventSupplier;eventProcessor;eventListenerConsumer;eventCallbackConsumer
+  function.definition: eventSupplier;eventCallbackConsumer
+  default-binder: kafka
+  kafka.binder:
+    brokers:
+      - localhost:9092
+  bindings:
+    eventSupplier-out-0:
+      destination: event-source
+    eventProcessor-in-0:
+      destination: event-source
+    eventProcessor-out-0:
+      destination: event-callback
+    eventCallbackConsumer-in-0:
+      destination: event-callback
