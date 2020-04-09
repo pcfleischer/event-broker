@@ -1,0 +1,26 @@
+# sorry spring buddies
+spring:
+  main:
+    banner-mode: "off"
+
+spring.jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+primaryDataSource:
+  poolName: "PrimaryHikariPool"
+  driverClass: org.postgresql.Driver
+  maxWaitForConnection: 1
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  validationIntervalMillis: 30000
+  url: jdbc:postgresql://postgresdb:5432/events
+  user: postgres
+  password: postgres
+
+replicaDataSource:
+  poolName: "ReplicaHikariPool"
+  driverClass: org.postgresql.Driver
+  maxWaitForConnection: 1
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  validationIntervalMillis: 30000
+  url: jdbc:postgresql://postgresdb:5432/events_replica
+  user: postgres
+  password: postgres

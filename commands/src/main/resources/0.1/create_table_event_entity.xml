@@ -1,0 +1,17 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"
+        logicalFilePath="0.1/create_table_event_entity.xml">
+
+    <changeSet id="create_table_event_entity" author="pcfleischer">
+        <createTable tableName="event_entity">
+            <column name="id" type="NVARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_event_entity_id"/>
+            </column>
+            <column name="details_json" type="text">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

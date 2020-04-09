@@ -1,0 +1,2 @@
+mkdir -p ~/.terraform.d/plugins
+curl -k -SL https://github.com/Mongey/terraform-provider-kafka-connect/releases/download/v0.2.1/terraform-provider-kafka-connect_0.2.1_darwin_amd64.tar.gz | tar -xzf - -C ~/.terraform.d/plugins

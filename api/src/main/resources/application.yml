@@ -1,0 +1,40 @@
+server.port: 9080
+
+spring.cloud.stream:
+# local
+#  function.definition: eventSupplier;eventProcessor;eventListenerConsumer;eventCallbackConsumer
+  function.definition: eventSupplier;eventCallbackConsumer;eventEntityListenConsumer
+  default-binder: kafka
+  kafka:
+    binder:
+      brokers:
+        - localhost:9092
+      configuration:
+        schema:
+          registry:
+            url: http://localhost:8081
+    streams:
+      binder:
+        configuration:
+          application:
+            id: event-broker-api
+          schema:
+            registry:
+              url: http://localhost:8081
+    bindings:
+      eventEntityListenConsumer-in-0:
+        consumer:
+          configuration:
+            value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+            schema.registry.url: http://localhost:8081
+  bindings:
+    eventSupplier-out-0:
+      destination: pcfleischer.eventbroker.event_source
+    eventProcessor-in-0:
+      destination: pcfleischer.eventbroker.event_source
+    eventProcessor-out-0:
+      destination: pcfleischer.eventbroker.event_callback
+    eventCallbackConsumer-in-0:
+      destination: pcfleischer.eventbroker.event_callback
+    eventEntityListenConsumer-in-0:
+      destination: events.public.event_entity

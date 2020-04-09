@@ -1,0 +1,204 @@
+{
+    "type": "record",
+    "name": "Envelope",
+    "namespace": "events.public.event_entity",
+    "fields": [
+        {
+            "name": "before",
+            "type": [
+                "null",
+                {
+                    "type": "record",
+                    "name": "Value",
+                    "fields": [
+                        {
+                            "name": "id",
+                            "type": "string"
+                        },
+                        {
+                            "name": "client_id",
+                            "type": [
+                                "null",
+                                "string"
+                            ],
+                            "default": null
+                        },
+                        {
+                            "name": "details_json",
+                            "type": [
+                                "null",
+                                "string"
+                            ],
+                            "default": null
+                        },
+                        {
+                            "name": "error",
+                            "type": [
+                                "null",
+                                "string"
+                            ],
+                            "default": null
+                        },
+                        {
+                            "name": "ip_address",
+                            "type": [
+                                "null",
+                                "string"
+                            ],
+                            "default": null
+                        },
+                        {
+                            "name": "realm_id",
+                            "type": [
+                                "null",
+                                "string"
+                            ],
+                            "default": null
+                        },
+                        {
+                            "name": "session_id",
+                            "type": [
+                                "null",
+                                "string"
+                            ],
+                            "default": null
+                        },
+                        {
+                            "name": "event_time",
+                            "type": [
+                                "null",
+                                "long"
+                            ],
+                            "default": null
+                        },
+                        {
+                            "name": "type",
+                            "type": [
+                                "null",
+                                "string"
+                            ],
+                            "default": null
+                        },
+                        {
+                            "name": "user_id",
+                            "type": [
+                                "null",
+                                "string"
+                            ],
+                            "default": null
+                        }
+                    ],
+                    "connect.name": "events.public.event_entity.Value"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "after",
+            "type": [
+                "null",
+                "Value"
+            ],
+            "default": null
+        },
+        {
+            "name": "source",
+            "type": {
+                "type": "record",
+                "name": "Source",
+                "namespace": "io.debezium.connector.postgresql",
+                "fields": [
+                    {
+                        "name": "version",
+                        "type": [
+                            "null",
+                            "string"
+                        ],
+                        "default": null
+                    },
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "db",
+                        "type": "string"
+                    },
+                    {
+                        "name": "ts_usec",
+                        "type": [
+                            "null",
+                            "long"
+                        ],
+                        "default": null
+                    },
+                    {
+                        "name": "txId",
+                        "type": [
+                            "null",
+                            "long"
+                        ],
+                        "default": null
+                    },
+                    {
+                        "name": "lsn",
+                        "type": [
+                            "null",
+                            "long"
+                        ],
+                        "default": null
+                    },
+                    {
+                        "name": "schema",
+                        "type": [
+                            "null",
+                            "string"
+                        ],
+                        "default": null
+                    },
+                    {
+                        "name": "table",
+                        "type": [
+                            "null",
+                            "string"
+                        ],
+                        "default": null
+                    },
+                    {
+                        "name": "snapshot",
+                        "type": [
+                            {
+                                "type": "boolean",
+                                "connect.default": false
+                            },
+                            "null"
+                        ],
+                        "default": false
+                    },
+                    {
+                        "name": "last_snapshot_record",
+                        "type": [
+                            "null",
+                            "boolean"
+                        ],
+                        "default": null
+                    }
+                ],
+                "connect.name": "io.debezium.connector.postgresql.Source"
+            }
+        },
+        {
+            "name": "op",
+            "type": "string"
+        },
+        {
+            "name": "ts_ms",
+            "type": [
+                "null",
+                "long"
+            ],
+            "default": null
+        }
+    ],
+    "connect.name": "events.public.event_entity.Envelope"
+}

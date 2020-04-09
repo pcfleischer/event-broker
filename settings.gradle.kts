@@ -1,3 +1,8 @@
 rootProject.name = "event-broker"
 
-include("event-broker-api", "event-broker-processors")
+include(
+        "api",
+        "commands",
+        "core",
+        "processors"
+)
