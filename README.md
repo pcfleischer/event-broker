@@ -36,14 +36,19 @@ docker-compose up -d
 The reactive REST Api is designed to demonstrate an asynchronous processor:
 
 ```
+# build stuff
 ./gradlew build
-./gradlew :event-broker-processors:bootRun
-./gradlew :event-broker-api:bootRun
+# init stuff
+./gradlew initPrimary
+./gradlew initReplica
+# run stuff
+./gradlew :api:bootRun
+./gradlew :processors:bootRun
 ```
 
 https://github.com/spring-cloud/spring-cloud-stream-samples
 
-
+This sends an event to kafka and listens for a callback on a spring consumer function binding.
 ```
 curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:9080/events -d '{
   "name": "event",
@@ -53,6 +58,7 @@ curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" loc
  }'
  ```
 **Response:**
+The processor function runs a toUpper and outputs an object to call back binding.
  ```
  {
   "NAME": "EVENT",
@@ -102,14 +108,7 @@ https://debezium.io/documentation/reference/1.1/connectors/postgresql.html
 
 ### Debezium Connector
 
-####
-```
-cd erewhon/terraform/environments/<environment>/
-terraform init
-terraform plan
-terraform plan -target=module.activityStreamer
-```
-
+The debezium postgres connector creates a replication slot and streams changes into a kafka topic. In order to create the connector instance you can 
 
 By default the Debezium connectors us JSON serialization, which is easier to consume "across platforms".  Though many 
 
@@ -131,6 +130,27 @@ CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL=http://schema-registry:8081
 
 
 #### Creating PostgreSQL Connector
+
+##### Create Connector with Terraform
+
+Requires terraform "see brew install terraform"
+
+```
+# install the kafka connect plugin via tarball
+./scripts/install_tf_k_connect.sh
+
+# use the environment variable directory, init and apply the resources
+cd terraform/environments/<environment>/
+terraform init
+terraform plan
+terraform apply
+
+# or just run the event broker module
+terraform apply -target=module.eventBroker
+```
+
+##### Create Connector with CURL
+
 ```
 curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors -d '{
   "name": "postgres-events-connector",
@@ -187,9 +207,12 @@ where slot_name = 'debezium';
 ```
 
 `curl -i -X DELETE http://localhost:8083/connectors/postgres-events-connector`
+
 NOTE: wait for rebalance to complete and connector no longer is returned in the connector list
+
 `curl http://localhost:8083/connectors`
 
+**Sample Debezium Envelope**
 ```
 {
     "after": {
@@ -213,8 +236,9 @@ NOTE: wait for rebalance to complete and connector no longer is returned in the 
 }
 ```
 
-
 ### S3 Sink Connector
+
+If you intend to save all the message off to long term storage an option might be to use the s3 connector from confluent.
 
 https://docs.confluent.io/current/connect/kafka-connect-s3/index.html
 
@@ -228,12 +252,15 @@ https://docs.confluent.io/current/connect/kafka-connect-s3/index.html
 * AWS Credentials
   * Project default - mount your aws profile ~/.aws credentials setup
   * Environment variables - explicitly add these to your container environment
+  
 ```
 AWS_ACCESS_KEY_ID: *******
 AWS_SECRET_KEY: *******
 ```
 
 **Create S3 Connector**
+
+This example is work in progress, it uses local stack which is not currently part of the docker composition.
 
 ```
  curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:18083/connectors -d '{
@@ -273,6 +300,8 @@ curl http://localhost:8083/connectors/postgres-events-connector/tasks
 ```
 
 ### Schema Registry
+
+In this demo project we aren't using code generation of objects from avro or demonstrating schema changes but the schema registry is required for debezium connectors.
 
 https://www.baeldung.com/spring-cloud-stream-kafka-avro-confluent
 
