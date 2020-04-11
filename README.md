@@ -165,7 +165,7 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
       "database.dbname" : "events",
       "database.server.name": "events",
       "schema.whitelist": "public",
-      "table.whitelist": "event_entity",
+      "table.whitelist": "public.event_entity",
       "key.converter": "io.confluent.connect.avro.AvroConverter",
       "value.converter": "io.confluent.connect.avro.AvroConverter",
       "key.converter.schema.registry.url": "http://schema-registry:8081",
@@ -216,8 +216,7 @@ NOTE: wait for rebalance to complete and connector no longer is returned in the 
 ```
 {
     "after": {
-        "id": "2",
-        "client_id": "test-create",
+        "id": "2",  
         "details_json": "{ \"test\": \"create\" }"
     },
     "source": {

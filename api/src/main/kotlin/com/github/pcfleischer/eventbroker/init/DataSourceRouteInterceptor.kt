@@ -1,6 +1,5 @@
 package com.github.pcfleischer.eventbroker.init
 
-
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
@@ -18,7 +17,7 @@ class DataSourceRouteInterceptor {
     @Throws(Throwable::class)
     fun proceed(proceedingJoinPoint: ProceedingJoinPoint, dataSourceRouting: DataSourceRouting): Any {
         return try {
-            if (dataSourceRouting.route == RoutingDataSource.Route.REPLICA) {
+            if (dataSourceRouting.route == DataSourceRoute.REPLICA) {
                 RoutingDataSource.setReplicaRoute()
                 logger.debug("Routing database call to the read replica")
             }

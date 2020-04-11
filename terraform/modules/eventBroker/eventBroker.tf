@@ -13,7 +13,7 @@ resource "kafka-connect_connector" "postgres-events-connector" {
     "database.dbname"                     = "events"
     "database.server.name"                = "events"
     "schema.whitelist"                    = "public"
-    "table.whitelist"                     = "event_entity"
+    "table.whitelist"                     = "public.event_entity"
     "key.converter"                       = "io.confluent.connect.avro.AvroConverter"
     "value.converter"                     = "io.confluent.connect.avro.AvroConverter"
     "key.converter.schema.registry.url"   = "http://schema-registry:8081"

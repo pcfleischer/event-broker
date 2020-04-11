@@ -18,8 +18,8 @@ class DataSourceInit(
         val primaryDataSource = dataSourceFactory.create(properties.primaryDataSource)
         val replicaDataSource = dataSourceFactory.create(properties.replicaDataSource)
         val targetDataSources: MutableMap<Any, Any> = mutableMapOf(
-                RoutingDataSource.Route.PRIMARY to primaryDataSource,
-                RoutingDataSource.Route.REPLICA to replicaDataSource
+                DataSourceRoute.PRIMARY to primaryDataSource,
+                DataSourceRoute.REPLICA to replicaDataSource
         )
 
         val routingDataSource = RoutingDataSource()

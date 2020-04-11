@@ -1,14 +1,15 @@
 package com.github.pcfleischer.eventbroker.models
 
 import com.fasterxml.jackson.annotation.*
+import io.debezium.data.Envelope
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-class Envelope<T> {
+class Envelope {
     @JsonProperty("before")
-    var before: T? = null
+    var before: Any? = null
 
     @JsonProperty("after")
-    var after: T? = null
+    var after: Any? = null
 
     @JsonProperty("source")
     var source: Source? = null

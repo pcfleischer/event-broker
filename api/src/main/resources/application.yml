@@ -1,8 +1,6 @@
 server.port: 9080
 
 spring.cloud.stream:
-# local
-#  function.definition: eventSupplier;eventProcessor;eventListenerConsumer;eventCallbackConsumer
   function.definition: eventSupplier;eventCallbackConsumer;eventEntityListenConsumer
   default-binder: kafka
   kafka:
